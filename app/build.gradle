@@ -1,0 +1,119 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.3"
+
+    defaultConfig {
+        applicationId "mahmoud.nousir.contentmanagertest2"
+        minSdkVersion 23
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    flavorDimensions "environment"
+    productFlavors {
+
+        dev {
+            dimension "environment"
+            buildConfigField "String", "API_URL", "\"https://smaek-stage.nousdigital.net/\""
+            buildConfigField "String", "CDN_URL", "\"https://cmsnous.blob.core.windows.net/smaek-stage/content/\""
+            buildConfigField "String", "CDN_URL_SUBURL", "\"content\""
+            buildConfigField "String", "SYNC_SERVER_BASE_URL", "\"https://smaek-stage.nousdigital.net/\""
+            buildConfigField "String", "DEFAULT_LANGUAGE", "\"de\""
+            buildConfigField "String", "APP_CENTER_KEY", "\"217a2063-6ac2-44a5-a3a3-978faf2d8d44\""
+            buildConfigField "Boolean", "HIDE_ANDROID_UI", "false"
+            buildConfigField "Boolean", "KIOSK_MODE", "false"
+            buildConfigField "String", "KONTAKT_IO_API_KEY", "\"yGcaHmvlNkXVyxMQaCmGoxlQvDvNVQfm\""
+            buildConfigField "Integer", "KONTAKT_IO_SCAN_INTERVAL_MILLIS", "1000"
+            buildConfigField "String", "PROXIMITY_UUID", "\"6e6f7573-6469-6769-7461-6c2e636f6d0d\""
+            buildConfigField "Integer", "GARDEN_MAYOR_NUMBER", "900"
+            buildConfigField "String", "WIFI_SSID", "\"NOUS\""
+            buildConfigField "String", "MATOMO_URI", "\"https://providence.nousdigital.net/matomo.php\""
+            buildConfigField "Integer", "MATOMO_SITE_ID", "6"
+            buildConfigField "Integer", "AUTO_UPDATE_STARTTIME_HOURS", "0"
+            buildConfigField "Integer", "AUTO_UPDATE_WINDOWSIZE_HOURS", "0"
+            buildConfigField "Boolean", "USE_EAR_PIECE", "true"
+        }
+
+        production {
+            dimension "environment"
+            buildConfigField "String", "API_URL", "\"https://jmb.nousdigital.net/\""
+            buildConfigField "String", "CDN_URL", "\"https://cmsnous.blob.core.windows.net/jmb-prod/\""
+            buildConfigField "String", "CDN_URL_SUBURL", "\"content\""
+            buildConfigField "String", "SYNC_SERVER_BASE_URL", "\"https://cachingtest.nousdigital.net/\""
+            buildConfigField "String", "DEFAULT_LANGUAGE", "\"de\""
+            buildConfigField "String", "APP_CENTER_KEY", "\"a8a54659-ec98-46b6-a070-873a837b013f\""
+            buildConfigField "Boolean", "HIDE_ANDROID_UI", "false"
+            buildConfigField "Boolean", "KIOSK_MODE", "false"
+            buildConfigField "String", "KONTAKT_IO_API_KEY", "\"yGcaHmvlNkXVyxMQaCmGoxlQvDvNVQfm\""
+            buildConfigField "Integer", "KONTAKT_IO_SCAN_INTERVAL_MILLIS", "1000"
+            buildConfigField "String", "PROXIMITY_UUID", "\"6e6f7573-6469-6769-7461-6c2e636f6d0d\""
+            buildConfigField "Integer", "GARDEN_MAYOR_NUMBER", "900"
+            buildConfigField "String", "WIFI_SSID", "\"NOUS\""
+            buildConfigField "String", "MATOMO_URI", "\"https://www.jmberlin.de/piwik/matomo.php\""
+            buildConfigField "Integer", "MATOMO_SITE_ID", "9"
+            buildConfigField "Integer", "AUTO_UPDATE_STARTTIME_HOURS", "0"
+            buildConfigField "Integer", "AUTO_UPDATE_WINDOWSIZE_HOURS", "0"
+            buildConfigField "Boolean", "USE_EAR_PIECE", "true"
+        }
+
+        inhouse {
+            dimension "environment"
+            buildConfigField "String", "API_URL", "\"https://jmb.nousdigital.net/\""
+            buildConfigField "String", "CDN_URL", "\"https://jmb-cdn.azureedge.net/\""
+            buildConfigField "String", "CDN_URL_SUBURL", "\"content\""
+            buildConfigField "String", "SYNC_SERVER_BASE_URL", "\"https://10.200.254.11/\""
+            buildConfigField "String", "DEFAULT_LANGUAGE", "\"de\""
+            buildConfigField "String", "APP_CENTER_KEY", "\"b886a976-acd2-4c1b-9bf3-af31c1af5579\""
+            buildConfigField "Boolean", "HIDE_ANDROID_UI", "true"
+            buildConfigField "Boolean", "KIOSK_MODE", "true"
+            buildConfigField "String", "KONTAKT_IO_API_KEY", "\"yGcaHmvlNkXVyxMQaCmGoxlQvDvNVQfm\""
+            buildConfigField "Integer", "KONTAKT_IO_SCAN_INTERVAL_MILLIS", "1000"
+            buildConfigField "String", "PROXIMITY_UUID", "\"6e6f7573-6469-6769-7461-6c2e636f6d0d\""
+            buildConfigField "Integer", "GARDEN_MAYOR_NUMBER", "900"
+            buildConfigField "String", "WIFI_SSID", "\"NOUS\""
+            buildConfigField "String", "MATOMO_URI", "\"https://www.jmberlin.de/piwik/matomo.php\""
+            buildConfigField "Integer", "MATOMO_SITE_ID", "9"
+            buildConfigField "Integer", "AUTO_UPDATE_STARTTIME_HOURS", "18"  //eg. 18.00pm of today UTC
+            buildConfigField "Integer", "AUTO_UPDATE_WINDOWSIZE_HOURS", "8" //x hours from start time on, we can start the update. e.g: 20.00 + max 5 hours = until 1am the next day
+            buildConfigField "Boolean", "USE_EAR_PIECE", "false"
+        }
+
+    }
+}
+
+dependencies {
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation project(path: ':ngcontentmanager')
+    //RXJava for android
+    implementation "io.reactivex.rxjava3:rxandroid:$rootProject.rxAndroidVersion"
+    implementation "io.reactivex.rxjava3:rxkotlin:$rootProject.rxKotlinVersion"
+}

@@ -1,0 +1,3 @@
+include ':ngcontentmanager'
+include ':app'
+rootProject.name = "ContentManagerTest2"
