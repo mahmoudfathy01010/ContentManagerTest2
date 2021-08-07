@@ -36,7 +36,7 @@ android {
         dev {
             dimension "environment"
             buildConfigField "String", "API_URL", "\"https://smaek-stage.nousdigital.net/\""
-            buildConfigField "String", "CDN_URL", "\"https://cmsnous.blob.core.windows.net/smaek-stage/content/\""
+            buildConfigField "String", "CDN_URL", "\"https://cmsnous.blob.core.windows.net/smaek-stage/\""
             buildConfigField "String", "CDN_URL_SUBURL", "\"content\""
             buildConfigField "String", "SYNC_SERVER_BASE_URL", "\"https://smaek-stage.nousdigital.net/\""
             buildConfigField "String", "DEFAULT_LANGUAGE", "\"de\""

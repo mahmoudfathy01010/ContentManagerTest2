@@ -35,7 +35,7 @@ android {
         dev {
             dimension "environment"
             buildConfigField "String", "JWT_API_TENANT","\"b25b103b-154d-492a-92a3-f8318e92f70e\""
-            buildConfigField "String", "NC_CHANNEL", "\"public\""
+            buildConfigField "String", "NC_CHANNEL", "\"inhouse\""
 
         }
         production {

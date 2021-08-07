@@ -15,7 +15,7 @@ import java.util.List;
  * © NOUS Wissensmanagement GmbH, 2018
  */
 public interface NGApiService {
-    @GET("sync/v2.0/info/")
+    @GET("sync/v2.0/")
     Call<SyncResponseDto> getApiSync(@Query("buildNumber") int buildNumber);
 
     @Streaming

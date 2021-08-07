@@ -3,6 +3,7 @@ package mahmoud.nousir.contentmanagertest2
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import com.nousdigital.ngcontentmanager.NGContentManager
 import com.nousdigital.ngcontentmanager.data.db.NGDatabase
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -13,19 +14,46 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        NGContentManager.init(
-                NGContentManager.Configuration
-                        .builder()
-                        .apiUri(BuildConfig.API_URL)
-                        .contentUri(BuildConfig.CDN_URL)
-                        .syncServerUri(BuildConfig.SYNC_SERVER_BASE_URL)
-                        .context(this)
-                        .language( Locale.getDefault().language
-                        )
-                        .build()
-        )
+        findViewById<Button>(R.id.downloadBtn).setOnClickListener {
+            NGContentManager.init(
+                    NGContentManager.Configuration
+                            .builder()
+                            .apiUri(BuildConfig.API_URL)
+                            .contentUri(BuildConfig.CDN_URL)
+                            .syncServerUri(BuildConfig.SYNC_SERVER_BASE_URL)
+                            .context(this)
+                            .language( Locale.getDefault().language)
+                            .build()
+            )
 
-        val boolean  = NGDatabase.exists(this)
+            val boolean  = NGDatabase.exists(this)
+
+            NGContentManager.instance().downloadDatabaseAndFiles(true)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .doOnComplete {
+                        Log.i("mahmoud01010","completed")
+                        val x =  NGContentManager.instance().getTour(470989790)
+                        x.subscribe({ t ->
+                            if (t != null) {
+                                Log.i("mahmoud01010","getTourError: tour is here")
+
+                            }
+                            Log.i("mahmoud01010","getTourError: tour equal null")
+
+                        }, {
+                            Log.i("mahmoud01010","getTourError: ${it.message.toString()}")
+                        })
+                    }
+                    .doOnError {
+                        Log.i("mahmoud0101", it.message.toString())
+                    }
+                    .doOnNext{ percent ->
+                        Log.i("mahmoud0101", percent.toString())
+                    }
+                    .doAfterTerminate(NGContentManager.instance().cleanUpAfterDownloadingFiles()).subscribe()
+
+        }
 
 
 //        NGContentManager.instance().downloadDatabaseAndFiles(true)
@@ -44,30 +72,6 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        NGContentManager.instance().downloadDatabase(true)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnComplete {
-                Log.i("mahmoud01010","completed")
-                val x =  NGContentManager.instance().getTour(470989790)
-                x.subscribe({ t ->
-                    if (t != null) {
-                        Log.i("mahmoud01010","getTourError: tour is here")
-
-                    }
-                    Log.i("mahmoud01010","getTourError: tour equal null")
-
-                }, {
-                    Log.i("mahmoud01010","getTourError: ${it.message.toString()}")
-                })
-            }
-            .doOnError {
-                Log.i("mahmoud0101", it.message.toString())
-            }
-            .doOnNext{ percent ->
-                Log.i("mahmoud0101", percent.toString())
-            }
-            .doAfterTerminate(NGContentManager.instance().cleanUpAfterDownloadingFiles()).subscribe()
 
 
 //        NGContentManager.instance().downloadDatabase(false).subscribe {

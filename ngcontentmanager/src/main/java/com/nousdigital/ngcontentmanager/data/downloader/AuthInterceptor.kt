@@ -20,12 +20,14 @@ class AuthInterceptor(private val jwtApi: String, private val jwtSyncServer: Str
         var request = chain.request().newBuilder()
             .header("nc-channel", BuildConfig.NC_CHANNEL)
 
-        //Add jwt for api
-        request.header("nc-authentication", "Bearer $jwtApi")
+        if(!chain.request().url.toUrl().toString().contains("content/sync/inhouse_v2_0.db")){
+            //Add jwt for api
+            request.header("Authorization", "Bearer $jwtApi")
 
-        //Add jwt for sync server if applicable (only for inhouse not null)
-        if(jwtSyncServer !=null){
-            request.header("Authorization", "Bearer $jwtSyncServer")
+            //Add jwt for sync server if applicable (only for inhouse not null)
+            if(jwtSyncServer !=null){
+                request.header("Authorization", "Bearer $jwtSyncServer")
+            }
         }
 
         return chain.proceed(request.build())
